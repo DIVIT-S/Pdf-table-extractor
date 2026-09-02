@@ -1,3 +1,83 @@
+# Python virtual environments
+venv/
 .venv/
+env/
+.env
+.env.local
+.env*.local
+
+# Python bytecode and caches
 __pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# IDE and editor files
+.vscode/
+.vscode-server/
+.idea/
+*.swp
+*.swo
+*~
 .DS_Store
+Thumbs.db
+
+# Testing and coverage
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.hypothesis/
+pytest.ini
+
+# Streamlit
+.streamlit/
+.streamlit/secrets.toml
+
+# Jupyter notebook
+.ipynb_checkpoints/
+*.ipynb
+
+# Development and debug files
+*.log
+debug_*.png
+page_*_debug.png
+table*_crop.png
+*_debug.xlsx
+
+# Test outputs
+test_out*.xlsx
+test_output*.xlsx
+test_*.pdf
+
+# Local archives
+*.zip
+!TableExtractor_App.zip
+
+# OS and system files
+.DS_Store
+.AppleDouble
+.LSOverride
+.gemini/
+
+# Local data/cache
+*.cache
+.cache/
+
