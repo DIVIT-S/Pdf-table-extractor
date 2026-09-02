@@ -58,10 +58,8 @@ Then:
 ```
 ├── app.py              # Streamlit application
 ├── extractor.py        # PDF table extraction logic
-├── exporter.py         # Excel file generation
+├── exporter.py         # Excel file generation & consolidation
 ├── requirements.txt    # Python dependencies
-├── tests/              # Test suite
-├── src/                # Source utilities
 └── README.md           # This file
 ```
 
@@ -82,11 +80,23 @@ Then:
 - Preview display
 - Download button
 
-## Testing
+## Troubleshooting
 
-Run the test suite:
+**Streamlit command not found?**
+
+If you get `command not found: streamlit`, try one of these:
+
 ```bash
-pytest tests/ -v
+# Option 1: Use Python module
+python -m streamlit run app.py
+
+# Option 2: Use full path
+/path/to/venv/bin/streamlit run app.py
+
+# Option 3: Deactivate and reactivate venv
+deactivate
+source venv/bin/activate
+streamlit run app.py
 ```
 
 ## Dependencies
