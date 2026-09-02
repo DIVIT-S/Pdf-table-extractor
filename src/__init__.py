@@ -1,1 +1,0 @@
-"""PDF Table Extractor package."""

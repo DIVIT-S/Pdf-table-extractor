@@ -1,94 +1,117 @@
 # PDF Table Extractor
 
-A local, high-precision Streamlit web application designed to automatically detect, reconstruct, stitch, and export tables from any PDF document (selectable digital text, scanned images, or mixed layouts) into clean Excel (`.xlsx`) workbooks.
+A Python-based Streamlit application for extracting tables from PDF files (both digital and scanned), consolidating them by schema, and exporting them to Excel.
 
----
+## Features
 
-## Key Features
+- **PDF Table Extraction**: Extract bordered tables from digital and scanned PDFs
+- **Digital PDF Support**: Extracts tables from text-based PDFs using `img2table`
+- **Scanned PDF Support**: Uses OCR (Tesseract) for image-based PDFs
+- **Schema Consolidation**: Automatically groups and merges tables with matching schemas
+- **Excel Export**: Downloads all extracted tables in a single Excel file
+- **Web Interface**: User-friendly Streamlit interface for easy uploads and downloads
 
-- **Hybrid Extraction Engine**:
-  - **Selectable / Digital PDFs**: Fast vector table extraction with `pdfplumber` combined with digital `img2table` parsing to capture both bordered and borderless (spaced) tables.
-  - **Scanned / Image PDFs**: Enhanced with Otsu image binarization and `TesseractOCR` fallback to accurately detect faint borders and line-item matrices.
-- **Anti-Hallucination & Quality Filtering**:
-  - Automatically detects and discards non-table structures (multiple-choice questionnaires, quiz options, Table of Contents with dot leaders, numbered/bulleted lists, footnotes, and multi-column narrative article layouts).
-  - Eliminates empty matrices and single-header artifacts (requires at least 2 valid data rows and ≥ 35% non-blank cell density).
-- **In-Memory Processing**:
-  - Uses `pypdf` to stream and slice documents page-by-page in-memory (`io.BytesIO`), maintaining a bounded RAM footprint even for large (100+ page) documents.
-- **Intelligent Multi-Page Stitching**:
-  - Recognizes continuous tables spanning consecutive pages, validates schema alignment, strips repeated header rows, and merges data smoothly.
-- **Formatted Excel Export**:
-  - Generates downloadable multi-sheet `.xlsx` files with styled headers, thin gridlines, and auto-adjusted column widths via `openpyxl`.
+## Installation
 
----
+### Prerequisites
+- Python 3.9+
+- Tesseract OCR (for scanned PDF support)
 
-## Project Structure
+### Setup
 
-```text
-Tableextract/
-├── app.py                  # Streamlit web interface, progress tracking, and file I/O
-├── requirements.txt        # Python package dependencies
-├── README.md               # Setup and usage documentation
-├── .gitignore              # Git ignore configuration
-└── src/
-    ├── __init__.py         # Package initialization
-    ├── table_extractor.py  # Page-by-page hybrid extraction engine (pdfplumber + img2table + OCR)
-    ├── table_processor.py  # Cleaning, anti-hallucination filtering, and multi-page stitching
-    ├── excel_exporter.py   # openpyxl / pandas multi-sheet Excel generator
-    └── utils.py            # Memory buffers, safe math, and cell cleaning helpers
+1. Clone the repository:
+```bash
+git clone https://github.com/DIVIT-S/Pdf-table-extractor.git
+cd Pdf-table-extractor
 ```
 
----
+2. Create a virtual environment:
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
 
-## System Prerequisites
+3. Install dependencies:
+```bash
+pip install -r requirements.txt
+```
 
-1. **Python 3.10+**
-2. **Tesseract OCR** (Required for scanned/image-based PDFs):
+4. Install Tesseract (if needed for OCR):
    - **macOS**: `brew install tesseract`
-   - **Ubuntu / Debian**: `sudo apt-get install -y tesseract-ocr`
-   - **Windows**: Install via [UB-Mannheim Tesseract installer](https://github.com/UB-Mannheim/tesseract/wiki) and ensure it is in your system PATH.
+   - **Ubuntu/Debian**: `sudo apt-get install tesseract-ocr`
+   - **Windows**: Download installer from [GitHub releases](https://github.com/UB-Mannheim/tesseract/wiki)
 
----
+## Usage
 
-## Installation & Setup
-
-1. **Clone the repository**:
-   ```bash
-   git clone <your-repo-url>
-   cd Tableextract
-   ```
-
-2. **Create and activate a virtual environment**:
-   ```bash
-   python3 -m venv .venv
-   source .venv/bin/activate   # On Windows: .venv\Scripts\activate
-   ```
-
-3. **Install dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
----
-
-## Running the Application
-
-Launch the Streamlit application locally:
-
+Run the Streamlit app:
 ```bash
 streamlit run app.py
 ```
 
-The app will start and open automatically in your browser at:
-`http://localhost:8501`
+Then:
+1. Upload a PDF file
+2. Preview the extracted tables
+3. Click "Download" to get all tables in Excel format
 
----
+## Project Structure
 
-## How It Works
+```
+├── app.py              # Streamlit application
+├── extractor.py        # PDF table extraction logic
+├── exporter.py         # Excel file generation
+├── requirements.txt    # Python dependencies
+├── tests/              # Test suite
+├── src/                # Source utilities
+└── README.md           # This file
+```
 
-1. **Upload**: Select or drag-and-drop any PDF document into the file uploader.
-2. **Process**: Click the **Extract Tables** button.
-3. **Monitor**: Real-time progress bar tracks page-by-page extraction and stitching.
-4. **Preview & Download**: Inspect interactive previews of each extracted table with dimensions and download the consolidated `_tables.xlsx` file.
+## Key Components
 
----
+### extractor.py
+- `extract_tables_from_page()`: Main extraction function
+- Detects digital vs scanned PDFs automatically
+- Returns DataFrames for each extracted table
 
+### exporter.py
+- `consolidate_tables()`: Groups tables by schema
+- `export_tables_to_excel()`: Generates formatted Excel file
+
+### app.py
+- Streamlit UI
+- File upload handler
+- Preview display
+- Download button
+
+## Testing
+
+Run the test suite:
+```bash
+pytest tests/ -v
+```
+
+## Dependencies
+
+- `streamlit` - Web interface
+- `pypdf` - PDF reading
+- `pdfplumber` - Text extraction
+- `pypdfium2` - PDF rendering
+- `img2table` - Table detection
+- `pytesseract` - OCR for scanned PDFs
+- `openpyxl` - Excel file creation
+- `pandas` - Data manipulation
+
+See `requirements.txt` for complete list with versions.
+
+## Known Limitations
+
+- Scanned PDF OCR quality depends on image resolution
+- Tesseract must be installed separately for OCR functionality
+- Very large PDFs (1000+ pages) may take time to process
+
+## License
+
+MIT License
+
+## Contributing
+
+Pull requests welcome! Please ensure tests pass before submitting.

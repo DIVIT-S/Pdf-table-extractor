@@ -6,3 +6,5 @@ pypdf>=4.0.0
 pdfplumber>=0.11.0
 pypdfium2>=4.30.0
 pytesseract>=0.3.10
+pytest>=8.0.0
+reportlab>=4.0.0
