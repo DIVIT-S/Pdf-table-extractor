@@ -1,12 +1,10 @@
-# Python virtual environments
+# Virtual environments (can be recreated from requirements.txt)
 venv/
 .venv/
 env/
-.env
-.env.local
-.env*.local
+ENV/
 
-# Python bytecode and caches
+# Python bytecode and build artifacts (auto-generated)
 __pycache__/
 *.py[cod]
 *$py.class
@@ -27,57 +25,40 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+MANIFEST
 
-# IDE and editor files
+# OS files (system-specific)
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+ehthumbs.db
+
+# IDE and editor cache (local to user)
 .vscode/
-.vscode-server/
 .idea/
 *.swp
 *.swo
 *~
-.DS_Store
-Thumbs.db
+.project
+.pydevproject
+.settings/
 
-# Testing and coverage
+# Testing cache (auto-generated)
 .pytest_cache/
 .coverage
-.coverage.*
 htmlcov/
-.tox/
-.hypothesis/
-pytest.ini
 
-# Streamlit
-.streamlit/
-.streamlit/secrets.toml
+# Environment variables with secrets (local-only, not committed)
+.env
+.env.local
 
-# Jupyter notebook
-.ipynb_checkpoints/
-*.ipynb
-
-# Development and debug files
-*.log
-debug_*.png
+# Temporary debug/test output files (generated during development)
 page_*_debug.png
 table*_crop.png
-*_debug.xlsx
+*.log
 
-# Test outputs
+# Large test outputs (can be regenerated)
 test_out*.xlsx
 test_output*.xlsx
-test_*.pdf
-
-# Local archives
-*.zip
-!TableExtractor_App.zip
-
-# OS and system files
-.DS_Store
-.AppleDouble
-.LSOverride
-.gemini/
-
-# Local data/cache
-*.cache
-.cache/
 
